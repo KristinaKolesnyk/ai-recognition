@@ -11,44 +11,6 @@ import ParticlesBg from 'particles-bg'
 
 const MODEL_ID = 'face-detection';
 
-/*
-const returnClarifaiRequestOptions = (imageUrl) => {
-    const PAT = '124acf4df6e54d249d72d207188253e1';
-    const USER_ID = 'clarifai';
-    const APP_ID = 'main';
-    const IMAGE_URL = imageUrl;
-
-
-        const raw = JSON.stringify({
-        "user_app_id": {
-            "user_id": USER_ID,
-            "app_id": APP_ID
-        },
-        "inputs": [
-            {
-                "data": {
-                    "image": {
-                        "url": IMAGE_URL
-                    }
-                }
-            }
-        ]
-    });
-
-
-    return {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Authorization': 'Key ' + PAT
-        },
-        body: raw
-    };
-
-}
-*/
-
-/////////delete
 const returnClarifaiRequestOptions = (imageUrl) => {
     const PAT = '124acf4df6e54d249d72d207188253e1';
     const USER_ID = 'clarifai';
@@ -65,7 +27,6 @@ const returnClarifaiRequestOptions = (imageUrl) => {
                 "data": {
                     "image": {
                         "url": IMAGE_URL
-                        // "base64": IMAGE_BYTES_STRING
                     }
                 }
             }
@@ -80,14 +41,9 @@ const returnClarifaiRequestOptions = (imageUrl) => {
         },
         body: raw
     };
-
     return requestOptions
 }
 
-
-
-
-////////
 
 class App extends Component {
     constructor() {
@@ -127,19 +83,6 @@ class App extends Component {
             .then(response => response.json())
             .then(response => {
                 console.log('hi', response)
-                if (response) {
-                    fetch('http://localhost:3000/image', {
-                        method: 'put',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({
-                            id: this.state.user.id
-                        })
-                    })
-                        .then(response => response.json())
-                        .then(count => {
-                            this.setState(Object.assign(this.state.user, {entries: count}))
-                        })
-                }
                 this.displayFaceBox(this.calculateFaceLocation(response))
             })
             .catch(err => console.log(err));
